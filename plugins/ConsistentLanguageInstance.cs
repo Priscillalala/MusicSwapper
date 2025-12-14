@@ -1,32 +1,29 @@
 ﻿using RoR2;
-using System.Collections;
 
 namespace MusicSwapper;
 
 // Consistent language used to generate config entries
 // Always english and not affected by language overrides
-public static class ConsistentLanguageCatalog
+public class ConsistentLanguageInstance : IDisposable
 {
-    private static List<KeyValuePair<string, string>> consistentTokenStringPairs;
+    private List<KeyValuePair<string, string>> consistentTokenStringPairs;
 
-    public static void Init()
+    public ConsistentLanguageInstance()
     {
         On.RoR2.Language.LoadAllTokensFromFolders += Language_LoadAllTokensFromFolders;
     }
 
-    private static void Language_LoadAllTokensFromFolders(On.RoR2.Language.orig_LoadAllTokensFromFolders orig, IEnumerable<string> folders, List<KeyValuePair<string, string>> output)
+    private void Language_LoadAllTokensFromFolders(On.RoR2.Language.orig_LoadAllTokensFromFolders orig, IEnumerable<string> folders, List<KeyValuePair<string, string>> output)
     {
         orig(folders, output);
-        MusicSwapperPlugin.Logger.LogMessage("Language_LoadAllTokensFromFolders");
         Language english = Language.FindLanguageByName("en");
         if (english != null && folders == english.folders)
         {
-            MusicSwapperPlugin.Logger.LogMessage("foudn english");
             consistentTokenStringPairs = output;
         }
     }
 
-    public static Dictionary<string, string> BuildConsistentLanguageDictionary()
+    public Dictionary<string, string> BuildConsistentLanguageDictionary()
     {
         Dictionary<string, string> consistentLanguageDictionary = [];
         if (consistentTokenStringPairs == null)
@@ -41,15 +38,14 @@ public static class ConsistentLanguageCatalog
         }
         foreach (var tokenStringPair in consistentTokenStringPairs)
         {
-            // The first tokenStringPair takes precident rather than the last, to ignore language overrides
+            // The first tokenStringPair takes priority rather than the last, to ignore language overrides
             consistentLanguageDictionary.TryAdd(tokenStringPair.Key, tokenStringPair.Value);
         }
         return consistentLanguageDictionary;
     }
 
-    public static void Cleanup()
+    public void Dispose()
     {
         On.RoR2.Language.LoadAllTokensFromFolders -= Language_LoadAllTokensFromFolders;
-        consistentTokenStringPairs = null;
     }
 }

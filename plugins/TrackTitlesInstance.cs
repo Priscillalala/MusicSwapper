@@ -5,32 +5,27 @@ using Path = System.IO.Path;
 
 namespace MusicSwapper;
 
-public static class TrackNamesCatalog
+public class TrackTitlesInstance
 {
-    public static Dictionary<string, string> InternalNameToAlbumName { get; private set; }
-    //public static Dictionary<string, string> AlbumNameToInternalName { get; private set; }
-    public static List<TrackTitle> AllTrackTitles { get; private set; }
-    public static Dictionary<string, MusicTrackDef> TrackNameToMusicTrackDef { get; private set; }
-    //public static Dictionary<UnityObjectWrapperKey<MusicTrackDef>, string> MusicTrackDefToTrackName { get; private set; }
+    public Dictionary<string, string> InternalNameToAlbumName { get; private set; }
+    public List<TrackTitle> AllTrackTitles { get; private set; }
+    public Dictionary<string, MusicTrackDef> TrackNameToMusicTrackDef { get; private set; }
 
-    public static void Init()
+    public TrackTitlesInstance(string fileName)
     {
         InternalNameToAlbumName = [];
-        //AlbumNameToInternalName = new(StringComparer.OrdinalIgnoreCase);
-        var json = JSON.Parse(File.ReadAllText(Path.Combine(MusicSwapperPlugin.RuntimeDirectory, "TrackNames.json")));
+        var json = JSON.Parse(File.ReadAllText(Path.Combine(MusicSwapperPlugin.RuntimeDirectory, fileName)));
         foreach (string internalName in json.Keys)
         {
             string trackName = json[internalName].Value;
             MusicSwapperPlugin.Logger.LogMessage($"{internalName}, {trackName}");
             InternalNameToAlbumName.Add(internalName, trackName);
-            //AlbumNameToInternalName.TryAdd(trackName, internalName);
         }
     }
 
-    public static void SetAllTracks(HashSet<UnityObjectWrapperKey<MusicTrackDef>> allTracks)
+    public void SetAllTracks(HashSet<UnityObjectWrapperKey<MusicTrackDef>> allTracks)
     {
         TrackNameToMusicTrackDef = new(StringComparer.OrdinalIgnoreCase);
-        //MusicTrackDefToTrackName = [];
         List<string> albumTrackNames = [];
         List<string> internalTrackNames = [];
         foreach (var musicTrack in allTracks.Select(x => x.value))
@@ -42,7 +37,6 @@ public static class TrackNamesCatalog
                     albumTrackNames.Add(albumName);
                 }
                 TrackNameToMusicTrackDef.TryAdd(albumName, musicTrack);
-                //MusicTrackDefToTrackName.Add(musicTrack, albumName);
             }
             else
             {
@@ -51,7 +45,6 @@ public static class TrackNamesCatalog
                     internalTrackNames.Add(musicTrack.cachedName);
                 }
                 TrackNameToMusicTrackDef.TryAdd(musicTrack.cachedName, musicTrack);
-                //MusicTrackDefToTrackName.Add(musicTrack, musicTrack.cachedName);
             }
         }
         albumTrackNames.Sort();

@@ -1,7 +1,7 @@
 {
-	"name": "StageVariety",
-	"version_number": "1.1.0",
-	"website_url": "https://github.com/Priscillalala/StagePermutations",
+	"name": "MusicSwapper",
+	"version_number": "1.0.0",
+	"website_url": "https://github.com/Priscillalala/MusicSwapper",
 	"description": "Adds more randomization to the vanilla stages with 15 new stage features.",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2117",

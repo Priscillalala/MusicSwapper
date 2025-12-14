@@ -30,7 +30,7 @@
 		<None Include="..\README.md">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Include="TrackNames.json">
+		<None Include="TrackTitles.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Include="starterconfig\**">

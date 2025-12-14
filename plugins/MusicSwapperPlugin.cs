@@ -47,8 +47,6 @@ public class MusicSwapperPlugin : BaseUnityPlugin
             }
         }
 
-        TrackNamesCatalog.Init();
-        ConsistentLanguageCatalog.Init();
-        RoR2Application.onLoad += MusicSwapperCatalog.Init;
+        MusicSwapperCatalog.Init();
     }
 }

@@ -4,9 +4,14 @@ using RoR2;
 
 namespace MusicSwapper;
 
-public static class PostLoopMusic
+public static class PostLoopMusicManager
 {
-    public class PostLoopTrackData(string trackName)
+    public interface IPostLoopTrackData
+    {
+        public void RegisterTrack(SceneDef scene, MusicTrackDef postLoopTrack);
+    }
+
+    public class PostLoopTrackData(string trackName) : IPostLoopTrackData
     {
         private readonly string trackName = trackName;
         public Dictionary<UnityObjectWrapperKey<SceneDef>, MusicTrackDef> tracks;
@@ -52,8 +57,6 @@ public static class PostLoopMusic
             }
         }
     }
-
-    public delegate void RegisterPostLoopTrackDelegate(SceneDef scene, MusicTrackDef postLoopTrack);
 
     public static readonly PostLoopTrackData mainTrackData = new(nameof(SceneDef.mainTrack));
     public static readonly PostLoopTrackData bossTrackData = new(nameof(SceneDef.bossTrack));
