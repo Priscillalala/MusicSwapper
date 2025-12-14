@@ -47,6 +47,6 @@ public class MusicSwapperPlugin : BaseUnityPlugin
             }
         }
 
-        MusicSwapperCatalog.Init();
+        MusicSwapperSystem.Init();
     }
 }

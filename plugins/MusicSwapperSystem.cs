@@ -9,7 +9,7 @@ using UnityEngine.AddressableAssets;
 
 namespace MusicSwapper;
 
-public static class MusicSwapperCatalog
+public static class MusicSwapperSystem
 {
     private struct SceneMusicConfigurationResult
     {
