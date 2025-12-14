@@ -2,7 +2,6 @@
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HG.Reflection;
-using RoR2;
 using System.Security;
 using System.Security.Permissions;
 using Path = System.IO.Path;
