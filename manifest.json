@@ -1,0 +1,10 @@
+{
+	"name": "StageVariety",
+	"version_number": "1.1.0",
+	"website_url": "https://github.com/Priscillalala/StagePermutations",
+	"description": "Adds more randomization to the vanilla stages with 15 new stage features.",
+	"dependencies": [
+		"bbepis-BepInExPack-5.4.2117",
+		"RiskofThunder-HookGenPatcher-1.2.5"
+	]
+}
