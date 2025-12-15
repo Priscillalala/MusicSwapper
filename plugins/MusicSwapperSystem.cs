@@ -6,6 +6,7 @@ using RoR2.EntitlementManagement;
 using RoR2.ExpansionManagement;
 using RoR2BepInExPack.GameAssetPathsBetter;
 using UnityEngine.AddressableAssets;
+using static RoR2.SceneCollection;
 
 namespace MusicSwapper;
 
@@ -46,8 +47,6 @@ public static class MusicSwapperSystem
 
     private static void DoConfiguration()
     {
-        MusicSwapperPlugin.Logger.LogMessage("Music swapper do config");
-
         ExpansionDef dlc1 = Addressables.LoadAssetAsync<ExpansionDef>(RoR2_DLC1_Common.DLC1_asset).WaitForCompletion();
 
         HashSet<UnityObjectWrapperKey<SceneDef>> infiniteTowerStages = [];
@@ -58,8 +57,11 @@ public static class MusicSwapperSystem
             foreach (var sceneEntry in sgInfiniteTowerStageX.sceneEntries)
             {
                 infiniteTowerStages.Add(sceneEntry.sceneDef);
-                MusicSwapperPlugin.Logger.LogMessage($"Found simulacrum stage: {sceneEntry.sceneDef.cachedName}");
             }
+        }
+        else
+        {
+            MusicSwapperPlugin.Logger.LogError($"Failed to load sgInfiniteTowerStageX!");
         }
 
         SceneDef[] configValidScenes = [.. SceneCatalog.allSceneDefs.Where(SceneValidForConfig)];
@@ -71,7 +73,7 @@ public static class MusicSwapperSystem
 
         foreach (SceneDef scene in configValidScenes)
         {
-            EntitlementDef sceneRequiredEntitlement = GetRequiredEntitlmentFromScene(scene);
+            EntitlementDef sceneRequiredEntitlement = GetRequiredEntitlementFromScene(scene);
             if (SceneValidForMainTrack(scene))
             {
                 RegisterMusicTrack(scene.mainTrack, sceneRequiredEntitlement);
@@ -84,7 +86,14 @@ public static class MusicSwapperSystem
 
         // Ensure that none is always an option
         MusicTrackDef muNone = Addressables.LoadAssetAsync<MusicTrackDef>(RoR2_Base_Common_MusicTrackDefs.muNone_asset).WaitForCompletion();
-        RegisterMusicTrack(muNone, null);
+        if (muNone)
+        {
+            RegisterMusicTrack(muNone, null);
+        }
+        else
+        {
+            MusicSwapperPlugin.Logger.LogError($"Failed to load muNone!");
+        }
         #endregion
 
         trackTitles.SetAllTracks(allMusicTracks);
@@ -106,7 +115,6 @@ public static class MusicSwapperSystem
                     SceneDef parentScene = scenesToConfigure[parentSceneIndex];
                     if (parentScene)
                     {
-                        MusicSwapperPlugin.Logger.LogMessage($"{parentScene.cachedName} is parent scene");
                         parentMainTrack = parentScene.mainTrack;
                         parentBossTrack = parentScene.bossTrack;
                         parentResult = ConfigureSceneMusic(parentScene, default, default);
@@ -188,6 +196,7 @@ public static class MusicSwapperSystem
                 parentConfigEntry);
             if (ShouldApplyMusicTrackConfig(configEntry, scene, parentConfigEntry, out MusicTrackDef chosenMusicTrack))
             {
+                MusicSwapperPlugin.Logger.LogMessage($"Setting the {scene.cachedName} {key} to {chosenMusicTrack.cachedName} (formerly {musicTrack.cachedName})");
                 musicTrack = chosenMusicTrack;
             }
             return configEntry;
@@ -195,15 +204,17 @@ public static class MusicSwapperSystem
 
         ConfigEntry<TrackTitle> ConfigureMusicTrackPostLoop(PostLoopMusicManager.IPostLoopTrackData postLoopTrackData, SceneDef scene, string section, string key, [CanBeNull] ConfigEntry<TrackTitle> parentConfigEntry)
         {
+            key = $"Post-Loop {key}";
             var postLoopConfigEntry = CreateMusicTrackConfigEntry(
                 section,
-                $"Post-Loop {key}",
+                key,
                 $"Choose a track to override the {key} after looping once.",
                 $"\nChoose \"{Constants.DEFAULT_MUSIC}\" to disable this feature.",
                 Constants.DEFAULT_MUSIC,
                 parentConfigEntry);
             if (ShouldApplyMusicTrackConfig(postLoopConfigEntry, scene, parentConfigEntry, out MusicTrackDef chosenPostLoopMusicTrack))
             {
+                MusicSwapperPlugin.Logger.LogMessage($"Setting the {scene.cachedName} {key} to {chosenPostLoopMusicTrack.cachedName}");
                 postLoopTrackData.RegisterTrack(scene, chosenPostLoopMusicTrack);
             }
             return postLoopConfigEntry;
@@ -258,9 +269,10 @@ public static class MusicSwapperSystem
             }
             if (entitlementLockedMusicTracks.TryGetValue(chosenMusicTrack, out var entitlementOptions))
             {
-                EntitlementDef sceneRequiredEntitlement = GetRequiredEntitlmentFromScene(scene);
-                if (!sceneRequiredEntitlement || !entitlementOptions.Contains(sceneRequiredEntitlement))
+                EntitlementDef sceneImplicitEntitlement = GetRequiredEntitlementFromScene(scene);
+                if (!sceneImplicitEntitlement || !entitlementOptions.Contains(sceneImplicitEntitlement))
                 {
+                    MusicSwapperPlugin.Logger.LogWarning($"The {scene.cachedName} {configEntry.Definition.Key} cannot be set to {chosenMusicTrack.cachedName} because the track's entitlement requirements are not met");
                     return false;
                 }
             }
@@ -298,7 +310,7 @@ public static class MusicSwapperSystem
         }
 
         // TODO: This breaks if a simulacrum stage requires entitlement from a different DLC
-        EntitlementDef GetRequiredEntitlmentFromScene(SceneDef scene)
+        EntitlementDef GetRequiredEntitlementFromScene(SceneDef scene)
         {
             EntitlementDef requiredEntitlement = scene.requiredExpansion ? scene.requiredExpansion.requiredEntitlement : null;
             if (!requiredEntitlement && infiniteTowerStages.Contains(scene) && dlc1)

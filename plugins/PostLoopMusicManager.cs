@@ -23,7 +23,6 @@ public static class PostLoopMusicManager
         public void RegisterTrack(SceneDef scene, MusicTrackDef postLoopTrack)
         {
             (tracks ??= [])[scene] = postLoopTrack;
-            MusicSwapperPlugin.Logger.LogMessage($"Register post loop {trackName} {postLoopTrack.cachedName} for {scene.cachedName}");
         }
 
         public void Init()

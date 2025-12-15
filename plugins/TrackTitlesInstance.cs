@@ -14,13 +14,19 @@ public class TrackTitlesInstance
     public TrackTitlesInstance(string fileName)
     {
         InternalNameToAlbumName = [];
-        var json = JSON.Parse(File.ReadAllText(Path.Combine(MusicSwapperPlugin.RuntimeDirectory, fileName)));
+        string path = Path.Combine(MusicSwapperPlugin.RuntimeDirectory, fileName);
+        if (!File.Exists(path))
+        {
+            MusicSwapperPlugin.Logger.LogWarning($"Could not find {fileName}!");
+            return;
+        }
+        var json = JSON.Parse(File.ReadAllText(path));
         foreach (string internalName in json.Keys)
         {
             string trackName = json[internalName].Value;
-            MusicSwapperPlugin.Logger.LogMessage($"{internalName}, {trackName}");
             InternalNameToAlbumName.Add(internalName, trackName);
         }
+        MusicSwapperPlugin.Logger.LogMessage($"Loaded {json.Count} track titles from {fileName}");
     }
 
     public void SetAllTracks(HashSet<UnityObjectWrapperKey<MusicTrackDef>> allTracks)

@@ -31,16 +31,14 @@ public class MusicSwapperPlugin : BaseUnityPlugin
         Logger = base.Logger;
         Config = base.Config;
         RuntimeDirectory = Path.GetDirectoryName(Info.Location);
-        Logger.LogMessage("Your GOAT's still got it");
 
         if (!File.Exists(Config.ConfigFilePath))
         {
-            Logger.LogWarning("config not here");
             string relativeConfigFilePath = Path.GetRelativePath(Paths.ConfigPath, Config.ConfigFilePath);
             string starterConfigPath = Path.Combine(RuntimeDirectory, "starterconfig", relativeConfigFilePath);
             if (File.Exists(starterConfigPath))
             {
-                Logger.LogWarning("foudn starter config");
+                Logger.LogMessage("Regenerating the config from the starter config");
                 File.Copy(starterConfigPath, Config.ConfigFilePath);
                 Config.Reload();
             }
