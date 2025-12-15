@@ -42,6 +42,7 @@ public static class PostLoopMusicManager
             }
             if (tracks.TryGetValue(mostRecentSceneDef, out mostRecentTrack) && !setHook)
             {
+                MusicSwapperPlugin.Logger.LogMessage($"Setting a hook to override {trackName} post loop");
                 setHook = true;
                 IL.RoR2.MusicController.PickCurrentTrack += OverrideTrackPostLoop;
             }

@@ -40,6 +40,7 @@ public class MusicSwapperPlugin : BaseUnityPlugin
         ExtrasConfig = GetConfigFile(GUID + ".Extras.cfg");
 
         MusicSwapperSystem.Init();
+        TeleporterAudioAdjuster.Init();
     }
 
     private ConfigFile GetConfigFile(string relativePath)
