@@ -240,7 +240,7 @@ public static class MusicSwapperSystem
                 desc += "\nSpecial Values:" + specialValuesDesc;
             }
 
-            return MusicSwapperPlugin.Config.Bind<TrackTitle>(section, key, defaultValue, new ConfigDescription(desc, new HiddenAcceptableValueList<TrackTitle>([.. acceptableValues], trackTitles.AllTrackTitles)));
+            return MusicSwapperPlugin.TracksConfig.Bind<TrackTitle>(section, key, defaultValue, new ConfigDescription(desc, new HiddenAcceptableValueList<TrackTitle>([.. acceptableValues], trackTitles.AllTrackTitles)));
         }
 
         bool ShouldApplyMusicTrackConfig(ConfigEntry<TrackTitle> configEntry, SceneDef scene, [CanBeNull] ConfigEntry<TrackTitle> parentConfigEntry, out MusicTrackDef chosenMusicTrack)

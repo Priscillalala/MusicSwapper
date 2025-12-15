@@ -23,27 +23,37 @@ public class MusicSwapperPlugin : BaseUnityPlugin
         VERSION = "1.0.0";
 
     public static new ManualLogSource Logger { get; private set; }
-    public static new ConfigFile Config { get; private set; }
     public static string RuntimeDirectory { get; private set; }
+    public static string ConfigDirectory { get; private set; }
+    public static string DefaultConfigDirectory { get; private set; }
+    public static ConfigFile TracksConfig { get; private set; }
+    public static ConfigFile ExtrasConfig { get; private set; }
 
     private void Awake()
     {
         Logger = base.Logger;
-        Config = base.Config;
         RuntimeDirectory = Path.GetDirectoryName(Info.Location);
+        ConfigDirectory = Path.Combine(Paths.ConfigPath, NAME);
+        DefaultConfigDirectory = Path.Combine(RuntimeDirectory, "defaultconfig");
 
-        if (!File.Exists(Config.ConfigFilePath))
-        {
-            string relativeConfigFilePath = Path.GetRelativePath(Paths.ConfigPath, Config.ConfigFilePath);
-            string starterConfigPath = Path.Combine(RuntimeDirectory, "defaultconfig", relativeConfigFilePath);
-            if (File.Exists(starterConfigPath))
-            {
-                Logger.LogMessage("Regenerating the config file from the default config file");
-                File.Copy(starterConfigPath, Config.ConfigFilePath);
-                Config.Reload();
-            }
-        }
+        TracksConfig = GetConfigFile(GUID + ".Tracks.cfg");
+        ExtrasConfig = GetConfigFile(GUID + ".Extras.cfg");
 
         MusicSwapperSystem.Init();
+    }
+
+    private ConfigFile GetConfigFile(string relativePath)
+    {
+        string configPath = Path.Combine(ConfigDirectory, relativePath);
+        if (!File.Exists(configPath))
+        {
+            string defaultConfigPath = Path.Combine(DefaultConfigDirectory, relativePath);
+            if (File.Exists(defaultConfigPath))
+            {
+                Logger.LogMessage($"Regenerating the config file {relativePath} from the default config file");
+                File.Copy(defaultConfigPath, configPath);
+            }
+        }
+        return new ConfigFile(configPath, true, Info.Metadata);
     }
 }
