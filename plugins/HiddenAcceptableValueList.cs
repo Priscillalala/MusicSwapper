@@ -2,7 +2,7 @@
 
 namespace MusicSwapper;
 
-public class HiddenAcceptableValueList<T>(T[] acceptableValues, HashSet<T> hiddenAcceptableValues) 
+public class HiddenAcceptableValueList<T>(T[] acceptableValues, HashSet<T> hiddenAcceptableValues)
     : AcceptableValueList<T>(acceptableValues) where T : IEquatable<T>
 {
     public virtual HashSet<T> HiddenAcceptableValues { get; } = hiddenAcceptableValues;

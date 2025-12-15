@@ -41,6 +41,7 @@ public class MusicSwapperPlugin : BaseUnityPlugin
 
         MusicSwapperSystem.Init();
         TeleporterAudioAdjuster.Init();
+        SolutionalHauntMusic.Init();
     }
 
     private ConfigFile GetConfigFile(string relativePath)

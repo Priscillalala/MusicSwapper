@@ -6,7 +6,6 @@ using RoR2.EntitlementManagement;
 using RoR2.ExpansionManagement;
 using RoR2BepInExPack.GameAssetPathsBetter;
 using UnityEngine.AddressableAssets;
-using static RoR2.SceneCollection;
 
 namespace MusicSwapper;
 
