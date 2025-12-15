@@ -33,7 +33,7 @@
 		<None Include="TrackTitles.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Include="starterconfig\**">
+		<None Include="defaultconfig\**">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

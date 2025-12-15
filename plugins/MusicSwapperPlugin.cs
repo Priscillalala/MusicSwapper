@@ -35,10 +35,10 @@ public class MusicSwapperPlugin : BaseUnityPlugin
         if (!File.Exists(Config.ConfigFilePath))
         {
             string relativeConfigFilePath = Path.GetRelativePath(Paths.ConfigPath, Config.ConfigFilePath);
-            string starterConfigPath = Path.Combine(RuntimeDirectory, "starterconfig", relativeConfigFilePath);
+            string starterConfigPath = Path.Combine(RuntimeDirectory, "defaultconfig", relativeConfigFilePath);
             if (File.Exists(starterConfigPath))
             {
-                Logger.LogMessage("Regenerating the config from the starter config");
+                Logger.LogMessage("Regenerating the config file from the default config file");
                 File.Copy(starterConfigPath, Config.ConfigFilePath);
                 Config.Reload();
             }
