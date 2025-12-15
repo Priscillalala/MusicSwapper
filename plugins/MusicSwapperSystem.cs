@@ -221,7 +221,7 @@ public static class MusicSwapperSystem
 
         ConfigEntry<TrackTitle> CreateMusicTrackConfigEntry(string section, string key, string desc, string specialValuesDesc, string defaultValue, [CanBeNull] ConfigEntry<TrackTitle> parentConfigEntry)
         {
-            List<TrackTitle> acceptableValues = [.. trackTitles.AllTrackTitles];
+            List<TrackTitle> acceptableValues = [.. trackTitles.PrimaryTrackTitles];
             if (parentConfigEntry != null)
             {
                 if (!acceptableValues.Contains(defaultValue))
@@ -240,7 +240,7 @@ public static class MusicSwapperSystem
                 desc += "\nSpecial Values:" + specialValuesDesc;
             }
 
-            return MusicSwapperPlugin.Config.Bind<TrackTitle>(section, key, defaultValue, new ConfigDescription(desc, new AcceptableValueList<TrackTitle>([.. acceptableValues])));
+            return MusicSwapperPlugin.Config.Bind<TrackTitle>(section, key, defaultValue, new ConfigDescription(desc, new HiddenAcceptableValueList<TrackTitle>([.. acceptableValues], trackTitles.AllTrackTitles)));
         }
 
         bool ShouldApplyMusicTrackConfig(ConfigEntry<TrackTitle> configEntry, SceneDef scene, [CanBeNull] ConfigEntry<TrackTitle> parentConfigEntry, out MusicTrackDef chosenMusicTrack)

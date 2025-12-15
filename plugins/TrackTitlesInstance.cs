@@ -8,7 +8,8 @@ namespace MusicSwapper;
 public class TrackTitlesInstance
 {
     public Dictionary<string, string> InternalNameToAlbumName { get; private set; }
-    public List<TrackTitle> AllTrackTitles { get; private set; }
+    public List<TrackTitle> PrimaryTrackTitles { get; private set; }
+    public HashSet<TrackTitle> AllTrackTitles { get; private set; }
     public Dictionary<string, MusicTrackDef> TrackNameToMusicTrackDef { get; private set; }
 
     public TrackTitlesInstance(string fileName)
@@ -36,29 +37,29 @@ public class TrackTitlesInstance
         List<string> internalTrackNames = [];
         foreach (var musicTrack in allTracks.Select(x => x.value))
         {
-            if (InternalNameToAlbumName.TryGetValue(musicTrack.cachedName, out var albumName))
+            string internalName = musicTrack.cachedName;
+            if (InternalNameToAlbumName.TryGetValue(internalName, out var albumName))
             {
                 if (!albumTrackNames.Contains(albumName))
                 {
                     albumTrackNames.Add(albumName);
                 }
+                AllTrackTitles.Add(albumName);
                 TrackNameToMusicTrackDef.TryAdd(albumName, musicTrack);
             }
-            else
+            else if (!internalTrackNames.Contains(internalName))
             {
-                if (!internalTrackNames.Contains(musicTrack.cachedName))
-                {
-                    internalTrackNames.Add(musicTrack.cachedName);
-                }
-                TrackNameToMusicTrackDef.TryAdd(musicTrack.cachedName, musicTrack);
+                internalTrackNames.Add(internalName);
             }
+            AllTrackTitles.Add(internalName);
+            TrackNameToMusicTrackDef.TryAdd(internalName, musicTrack);
         }
         albumTrackNames.Sort();
         internalTrackNames.Sort();
-        AllTrackTitles = [.. albumTrackNames, .. internalTrackNames];
-        if (AllTrackTitles.Remove(Constants.NO_MUSIC))
+        PrimaryTrackTitles = [.. albumTrackNames, .. internalTrackNames];
+        if (PrimaryTrackTitles.Remove(Constants.NO_MUSIC))
         {
-            AllTrackTitles.Add(Constants.NO_MUSIC);
+            PrimaryTrackTitles.Add(Constants.NO_MUSIC);
         }
     }
 }
