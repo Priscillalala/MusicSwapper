@@ -32,6 +32,7 @@ public class TrackTitlesInstance
 
     public void SetAllTracks(HashSet<UnityObjectWrapperKey<MusicTrackDef>> allTracks)
     {
+        AllTrackTitles = [];
         TrackNameToMusicTrackDef = [];
         List<string> albumTrackNames = [];
         List<string> internalTrackNames = [];
