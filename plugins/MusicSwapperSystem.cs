@@ -246,7 +246,7 @@ public static class MusicSwapperSystem
         bool ShouldApplyMusicTrackConfig(ConfigEntry<TrackTitle> configEntry, SceneDef scene, [CanBeNull] ConfigEntry<TrackTitle> parentConfigEntry, out MusicTrackDef chosenMusicTrack)
         {
             chosenMusicTrack = null;
-            if (string.Equals(configEntry.Value, Constants.INHERIT_MUSIC, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(configEntry.Value, Constants.INHERIT_MUSIC))
             {
                 if (parentConfigEntry != null)
                 {
@@ -254,11 +254,11 @@ public static class MusicSwapperSystem
                 }
                 return false;
             }
-            if (string.Equals(configEntry.Value, (TrackTitle)configEntry.DefaultValue, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(configEntry.Value, (TrackTitle)configEntry.DefaultValue))
             {
                 return false;
             }
-            if (string.Equals(configEntry.Value, Constants.DEFAULT_MUSIC, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(configEntry.Value, Constants.DEFAULT_MUSIC))
             {
                 return false;
             }

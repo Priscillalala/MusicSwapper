@@ -32,7 +32,7 @@ public class TrackTitlesInstance
 
     public void SetAllTracks(HashSet<UnityObjectWrapperKey<MusicTrackDef>> allTracks)
     {
-        TrackNameToMusicTrackDef = new(StringComparer.OrdinalIgnoreCase);
+        TrackNameToMusicTrackDef = [];
         List<string> albumTrackNames = [];
         List<string> internalTrackNames = [];
         foreach (var musicTrack in allTracks.Select(x => x.value))

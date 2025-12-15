@@ -22,9 +22,9 @@ public readonly struct TrackTitle(string value) : IEquatable<TrackTitle>
 
     public static implicit operator string(TrackTitle trackTitle) => trackTitle.Value;
 
-    public override int GetHashCode() => StringComparer.OrdinalIgnoreCase.GetHashCode(Value);
+    public override int GetHashCode() => Value?.GetHashCode() ?? 0;
 
-    public bool Equals(string other) => string.Equals(Value, other, StringComparison.OrdinalIgnoreCase);
+    public bool Equals(string other) => string.Equals(Value, other);
 
     public bool Equals(TrackTitle other) => Equals(other.Value);
 
