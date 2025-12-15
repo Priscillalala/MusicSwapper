@@ -208,8 +208,8 @@ public static class MusicSwapperSystem
                 section,
                 $"Post-Loop {key}",
                 $"Choose a track to override the {key} after looping once.",
-                $"\nChoose \"{Constants.DEFAULT_MUSIC}\" to disable this feature.",
-                Constants.DEFAULT_MUSIC,
+                $"\nChoose \"{Constants.VALUE_DEFAULT}\" to disable this feature.",
+                Constants.VALUE_DEFAULT,
                 parentConfigEntry);
             if (ShouldApplyMusicTrackConfig(postLoopConfigEntry, scene, parentConfigEntry, out MusicTrackDef chosenPostLoopMusicTrack))
             {
@@ -228,8 +228,8 @@ public static class MusicSwapperSystem
                 {
                     acceptableValues.Insert(0, defaultValue);
                 }
-                defaultValue = Constants.INHERIT_MUSIC;
-                specialValuesDesc = $"\nChoose \"{Constants.INHERIT_MUSIC}\" to use the same {key} as {parentConfigEntry.Definition.Section}." + specialValuesDesc;
+                defaultValue = Constants.VALUE_INHERIT;
+                specialValuesDesc = $"\nChoose \"{Constants.VALUE_INHERIT}\" to use the same {key} as {parentConfigEntry.Definition.Section}." + specialValuesDesc;
             }
             acceptableValues.Remove(defaultValue);
             acceptableValues.Insert(0, defaultValue);
@@ -246,7 +246,7 @@ public static class MusicSwapperSystem
         bool ShouldApplyMusicTrackConfig(ConfigEntry<TrackTitle> configEntry, SceneDef scene, [CanBeNull] ConfigEntry<TrackTitle> parentConfigEntry, out MusicTrackDef chosenMusicTrack)
         {
             chosenMusicTrack = null;
-            if (string.Equals(configEntry.Value, Constants.INHERIT_MUSIC))
+            if (string.Equals(configEntry.Value, Constants.VALUE_INHERIT))
             {
                 if (parentConfigEntry != null)
                 {
@@ -258,7 +258,7 @@ public static class MusicSwapperSystem
             {
                 return false;
             }
-            if (string.Equals(configEntry.Value, Constants.DEFAULT_MUSIC))
+            if (string.Equals(configEntry.Value, Constants.VALUE_DEFAULT))
             {
                 return false;
             }

@@ -58,9 +58,9 @@ public class TrackTitlesInstance
         albumTrackNames.Sort();
         internalTrackNames.Sort();
         PrimaryTrackTitles = [.. albumTrackNames, .. internalTrackNames];
-        if (PrimaryTrackTitles.Remove(Constants.NO_MUSIC))
+        if (PrimaryTrackTitles.Remove(Constants.TRACK_NAME_NONE))
         {
-            PrimaryTrackTitles.Add(Constants.NO_MUSIC);
+            PrimaryTrackTitles.Add(Constants.TRACK_NAME_NONE);
         }
     }
 }
