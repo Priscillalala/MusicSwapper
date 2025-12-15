@@ -204,17 +204,16 @@ public static class MusicSwapperSystem
 
         ConfigEntry<TrackTitle> ConfigureMusicTrackPostLoop(PostLoopMusicManager.IPostLoopTrackData postLoopTrackData, SceneDef scene, string section, string key, [CanBeNull] ConfigEntry<TrackTitle> parentConfigEntry)
         {
-            key = $"Post-Loop {key}";
             var postLoopConfigEntry = CreateMusicTrackConfigEntry(
                 section,
-                key,
+                $"Post-Loop {key}",
                 $"Choose a track to override the {key} after looping once.",
                 $"\nChoose \"{Constants.DEFAULT_MUSIC}\" to disable this feature.",
                 Constants.DEFAULT_MUSIC,
                 parentConfigEntry);
             if (ShouldApplyMusicTrackConfig(postLoopConfigEntry, scene, parentConfigEntry, out MusicTrackDef chosenPostLoopMusicTrack))
             {
-                MusicSwapperPlugin.Logger.LogMessage($"Setting the {scene.cachedName} {key} to {chosenPostLoopMusicTrack.cachedName}");
+                MusicSwapperPlugin.Logger.LogMessage($"Setting the {scene.cachedName} {postLoopConfigEntry.Definition.Key} to {chosenPostLoopMusicTrack.cachedName}");
                 postLoopTrackData.RegisterTrack(scene, chosenPostLoopMusicTrack);
             }
             return postLoopConfigEntry;
