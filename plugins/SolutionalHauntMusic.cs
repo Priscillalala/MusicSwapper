@@ -16,6 +16,7 @@ public static class SolutionalHauntMusic
             "After the Solus Wing fight, resume playing the main track of Solutional Haunt.");
         if (configEntry.Value)
         {
+            MusicSwapperPlugin.Logger.LogMessage($"{nameof(SolutionalHauntMusic)} extra is active");
             On.EntityStates.SolusWing2.Mission5Death.OnEnter += Mission5Death_OnEnter;
         }
     }

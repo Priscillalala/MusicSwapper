@@ -18,7 +18,7 @@ public static class TeleporterAudioAdjuster
             new ConfigDescription("Reduce this value to dampen the volume of Teleporter hum (the Teleporter hum emits from the Teleporter and plays along with a stage's main track).", new AcceptableValueRange<float>(0f, 1f)));
         if (volumeMultiplierConfigEntry.Value != DEFAULT_VALUE)
         {
-            MusicSwapperPlugin.Logger.LogMessage($"{nameof(TeleporterAudioAdjuster)} is active");
+            MusicSwapperPlugin.Logger.LogMessage($"{nameof(TeleporterAudioAdjuster)} extra is active");
             proximityScalar = Mathf.Clamp01(volumeMultiplierConfigEntry.Value);
             On.RoR2.MusicController.UpdateTeleporterParameters += MusicController_UpdateTeleporterParameters;
         }
