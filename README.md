@@ -15,7 +15,7 @@ You can reset these changes individually with your preferred config editor. If y
 
 **This mod also generates a small *Extras* config file with the following changes by default:**
 
-- **The Teleporter hum volume is reduced by 50%**
+- **The Teleporter hum volume is reduced**
 - **Solutional Haunt's main track continues playing after the boss fight** (also in the [WolfoQoL](https://thunderstore.io/package/Wolfo/WolfoQualityOfLife/) mod)
 
 ## Contact
