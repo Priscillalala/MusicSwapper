@@ -1,4 +1,4 @@
-# Music Manager
+# ![Music Manager](https://github.com/Priscillalala/MusicSwapper/blob/master/media/banner.png?raw=true)
 Choose which music tracks play on each stage!
 
 ## Config
