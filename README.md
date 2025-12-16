@@ -16,12 +16,16 @@ You can reset these changes individually with your preferred config editor. If y
 **This mod also generates a small *Extras* config file with the following changes by default:**
 
 - **The Teleporter hum volume is reduced by 50%**
-- **Solutional Haunt's main track continues playing after the boss fight**
+- **Solutional Haunt's main track continues playing after the boss fight** (also in the [WolfoQoL](https://thunderstore.io/package/Wolfo/WolfoQualityOfLife/) mod)
 
 ## Contact
 You can find me in the [RoR2 Modding Server](https://discord.gg/5MbXZvd) @groove_salad
 
 Or, you can post issues and feedback on the [GitHub](https://github.com/Priscillalala/MusicSwapper/issues)
+
+## Credits
+- Mod icon: based on official Risk of Rain 2 art by Nicole Dorosh
+- Solutional Haunt music code: based on an implementation of the same feature in the Wolfo Quality of Life mod  
 
 ## Donations
 If this mod was helpful, consider [buying me a coffee](https://www.buymeacoffee.com/groovesalad)!
