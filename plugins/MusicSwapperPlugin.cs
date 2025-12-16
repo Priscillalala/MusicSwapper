@@ -19,7 +19,7 @@ public class MusicSwapperPlugin : BaseUnityPlugin
 {
     public const string
         GUID = "groovesalad." + NAME,
-        NAME = "MusicSwapper",
+        NAME = "MusicManager",
         VERSION = "1.0.0";
 
     public static new ManualLogSource Logger { get; private set; }

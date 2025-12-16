@@ -1,4 +1,4 @@
-# Music Swapper
+# Music Manager
 Choose which music tracks play on each stage!
 
 ## Config

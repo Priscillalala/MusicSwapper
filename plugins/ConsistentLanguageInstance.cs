@@ -16,6 +16,7 @@ public class ConsistentLanguageInstance : IDisposable
     private void Language_LoadAllTokensFromFolders(On.RoR2.Language.orig_LoadAllTokensFromFolders orig, IEnumerable<string> folders, List<KeyValuePair<string, string>> output)
     {
         orig(folders, output);
+        // Language.english is not populated yet
         Language english = Language.FindLanguageByName("en");
         if (english != null && folders == english.folders)
         {
