@@ -183,8 +183,10 @@ public static class MusicSwapperSystem
 
         ConfigEntry<TrackTitle> ConfigureMusicTrack(ref MusicTrackDef musicTrack, SceneDef scene, string section, string key, string description, [CanBeNull] ConfigEntry<TrackTitle> parentConfigEntry)
         {
-            string defaultValue = musicTrack.cachedName;
-            trackTitles.InternalNameToAlbumName.TryGetValue(defaultValue, out defaultValue);
+            if (!trackTitles.InternalNameToAlbumName.TryGetValue(musicTrack.cachedName, out string defaultValue))
+            {
+                defaultValue = musicTrack.cachedName;
+            }
 
             var configEntry = CreateMusicTrackConfigEntry(
                 section,
