@@ -2,6 +2,7 @@
 
 namespace MusicSwapper;
 
+// internal track names should always be acceptable values but we dont need to display them to the user
 public class HiddenAcceptableValueList<T>(T[] acceptableValues, HashSet<T> hiddenAcceptableValues)
     : AcceptableValueList<T>(acceptableValues) where T : IEquatable<T>
 {
