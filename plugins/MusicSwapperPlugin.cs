@@ -53,6 +53,7 @@ public class MusicSwapperPlugin : BaseUnityPlugin
             if (File.Exists(defaultConfigPath))
             {
                 Logger.LogMessage($"Regenerating the config file {relativePath} from the default config file");
+                Directory.CreateDirectory(Path.GetDirectoryName(configPath));
                 File.Copy(defaultConfigPath, configPath);
             }
         }
