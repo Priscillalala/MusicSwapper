@@ -2,7 +2,7 @@
 using RoR2;
 using UnityEngine;
 
-namespace MusicSwapper;
+namespace MusicSwapper.Extras;
 
 public static class TeleporterAudioAdjuster
 {

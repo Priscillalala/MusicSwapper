@@ -24,6 +24,8 @@ public static class ContinueTeleporterMusic
     private static void MusicController_UpdateTeleporterParameters(On.RoR2.MusicController.orig_UpdateTeleporterParameters orig, MusicController self, TeleporterInteraction teleporter, Transform cameraTransform, CharacterBody targetBody)
     {
         orig(self, teleporter, cameraTransform, targetBody);
+        // inSceneTransition handles portals
+        // isInFinalSequence is probably redundant
         bool stopBossMusic = (teleporter && teleporter.isInFinalSequence) || (Run.instance && Run.instance.inSceneTransition);
         self.stBossStatus.valueId = stopBossMusic ? CommonWwiseIds.dead : CommonWwiseIds.alive;
     }

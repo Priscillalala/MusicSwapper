@@ -2,7 +2,7 @@
 using EntityStates.SolusWing2;
 using RoR2;
 
-namespace MusicSwapper;
+namespace MusicSwapper.Extras;
 
 // Also in the Wolfo Quality of Life mod
 public static class SolutionalHauntMusic

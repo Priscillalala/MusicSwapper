@@ -2,6 +2,7 @@
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HG.Reflection;
+using MusicSwapper.Extras;
 using System.Security;
 using System.Security.Permissions;
 using Path = System.IO.Path;
@@ -42,6 +43,7 @@ public class MusicSwapperPlugin : BaseUnityPlugin
         MusicSwapperSystem.Init();
         TeleporterAudioAdjuster.Init();
         SolutionalHauntMusic.Init();
+        ContinueTeleporterMusic.Init();
     }
 
     private ConfigFile GetConfigFile(string relativePath)
