@@ -11,9 +11,9 @@ public static class ContinueTeleporterMusic
     {
         ConfigEntry<bool> configEntry = MusicSwapperPlugin.ExtrasConfig.Bind(
             "Teleporter Music",
-            "Continue After Boss",
+            "Continue After Charged",
             false,
-            "Continue playing the Teleporter track until you leave the stage.");
+            "After charging the Teleporter, continue playing the Teleporter track until you leave the stage.");
         if (configEntry.Value)
         {
             MusicSwapperPlugin.Logger.LogMessage($"{nameof(ContinueTeleporterMusic)} extra is active");
