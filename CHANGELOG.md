@@ -4,7 +4,7 @@
 
 ### Added
 
-- Add extra option to continue the Teleporter track after the Teleporter is charged (disabled by default)
+- Add extra option to continue the Teleporter track after the Teleporter has charged (disabled by default)
 
 ## 1.0.0
 
