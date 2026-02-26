@@ -1,6 +1,6 @@
 {
 	"name": "MusicManager",
-	"version_number": "1.1.0",
+	"version_number": "1.1.1",
 	"website_url": "https://github.com/Priscillalala/MusicSwapper",
 	"description": "Choose which music tracks play on each stage + some other music-related config options. Includes a few changes by default!",
 	"dependencies": [

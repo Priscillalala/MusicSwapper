@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1
+
+### Changed
+
+- Optimized config file saving to reduce load times (shout-out to my GOAT Gorakh)
+
 ## 1.1.0
 
 ### Added

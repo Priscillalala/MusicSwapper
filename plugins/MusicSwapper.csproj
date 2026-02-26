@@ -10,7 +10,7 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<BaseOutputPath Condition="'$(BaseOutputPath)'==''">bin</BaseOutputPath>
-		<OutputPath>$(BaseOutputPath)\$(MSBuildProjectName)\$([MSBuild]::MakeRelative($(MSBuildStartupDirectory), $(MSBuildProjectDirectory)))</OutputPath>
+		<OutputPath>$(BaseOutputPath)\$(MSBuildProjectName)\plugins</OutputPath>
 	</PropertyGroup>
 
 	<ItemDefinitionGroup>

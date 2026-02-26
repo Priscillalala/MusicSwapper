@@ -36,6 +36,8 @@ public static class MusicSwapperSystem
     private static void OnLoad()
     {
         DoConfiguration();
+        MusicSwapperPlugin.TracksConfig.Save();
+        MusicSwapperPlugin.TracksConfig.SaveOnConfigSet = true;
 
         PostLoopMusicManager.Init();
 
