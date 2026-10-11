@@ -5,7 +5,9 @@ using RoR2;
 using RoR2.EntitlementManagement;
 using RoR2.ExpansionManagement;
 using RoR2BepInExPack.GameAssetPathsBetter;
+using SimpleJSON;
 using UnityEngine.AddressableAssets;
+using Path = System.IO.Path;
 
 namespace MusicSwapper;
 
@@ -46,6 +48,40 @@ public static class MusicSwapperSystem
         consistentLanguage = null;
     }
 
+    private static void LoadSceneData(string fileName, out HashSet<string> excludedSceneNames, out HashSet<string> noBossTrackSceneNames)
+    {
+        excludedSceneNames = [];
+        noBossTrackSceneNames = [];
+
+        string path = Path.Combine(MusicSwapperPlugin.RuntimeDirectory, fileName);
+        if (!File.Exists(path))
+        {
+            MusicSwapperPlugin.Logger.LogWarning($"Could not find {fileName}!");
+            return;
+        }
+        var json = JSON.Parse(File.ReadAllText(path));
+        if (TryToLoadJsonSceneNames("excluded", excludedSceneNames))
+        {
+            MusicSwapperPlugin.Logger.LogMessage($"Excluding scene(s): {string.Join(", ", excludedSceneNames)}");
+        }
+        if (TryToLoadJsonSceneNames("noBossTrack", noBossTrackSceneNames))
+        {
+            MusicSwapperPlugin.Logger.LogMessage($"Not configuring boss tracks for scene(s): {string.Join(", ", noBossTrackSceneNames)}");
+        }
+
+        bool TryToLoadJsonSceneNames(string jsonKey, HashSet<string> sceneNames)
+        {
+            var jsonNode = json[jsonKey];
+            if (jsonNode == null)
+            {
+                MusicSwapperPlugin.Logger.LogWarning($"Failed to find {jsonKey} node in {fileName}");
+                return false;
+            }
+            sceneNames.UnionWith(jsonNode.Children.Select(x => x.Value));
+            return true;
+        }
+    }
+
     private static void DoConfiguration()
     {
         ExpansionDef dlc1 = Addressables.LoadAssetAsync<ExpansionDef>(RoR2_DLC1_Common.DLC1_asset).WaitForCompletion();
@@ -64,6 +100,8 @@ public static class MusicSwapperSystem
         {
             MusicSwapperPlugin.Logger.LogError($"Failed to load sgInfiniteTowerStageX!");
         }
+
+        LoadSceneData("SceneData.json", out var excludedSceneNames, out var noBossTrackSceneNames);
 
         SceneDef[] configValidScenes = [.. SceneCatalog.allSceneDefs.Where(SceneValidForConfig)];
 
@@ -322,7 +360,7 @@ public static class MusicSwapperSystem
             return requiredEntitlement;
         }
 
-        static bool SceneValidForConfig(SceneDef scene)
+        bool SceneValidForConfig(SceneDef scene)
         {
             if (scene.isOfflineScene)
             {
@@ -336,6 +374,10 @@ public static class MusicSwapperSystem
             {
                 return false;
             }
+            if (excludedSceneNames.Contains(scene.cachedName))
+            {
+                return false;
+            }
             return true;
         }
 
@@ -346,7 +388,7 @@ public static class MusicSwapperSystem
 
         bool SceneValidForBossTrack(SceneDef scene)
         {
-            return scene.bossTrack && scene.hasAnyDestinations && !infiniteTowerStages.Contains(scene);
+            return scene.bossTrack && scene.hasAnyDestinations && !infiniteTowerStages.Contains(scene) && !noBossTrackSceneNames.Contains(scene.cachedName);
         }
     }
 }

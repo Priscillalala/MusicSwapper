@@ -21,7 +21,7 @@ public class MusicSwapperPlugin : BaseUnityPlugin
     public const string
         GUID = "groovesalad." + NAME,
         NAME = "MusicManager",
-        VERSION = "1.1.1";
+        VERSION = "1.2.0";
 
     public static new ManualLogSource Logger { get; private set; }
     public static string RuntimeDirectory { get; private set; }
@@ -45,7 +45,6 @@ public class MusicSwapperPlugin : BaseUnityPlugin
         MusicSwapperSystem.Init();
 
         TeleporterAudioAdjuster.Init();
-        SolutionalHauntMusic.Init();
         ContinueTeleporterMusic.Init();
         ExtrasConfig.Save();
         ExtrasConfig.SaveOnConfigSet = true;

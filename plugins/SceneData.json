@@ -1,0 +1,4 @@
+{
+	"excluded": [ "artreview", "soul_perftest", "testotherbrother" ],
+	"noBossTrack": [ "voidstage" ]
+}
